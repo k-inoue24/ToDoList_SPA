@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To Do List</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+    <div id="app" class="contentInner">
+        <h1 class="siteTitle">To Do List</h1>
+        <h2 class="PageTitle">本日のタスク</h2>
+        <section class="remainingTask">
+            <h3 class="sectionTitle">8月30日(日)：残タスク</h3>
+            <table class="taskTable remaining">
+                <tr>
+                    <th></th>
+                    <th>タスク名</th>
+                    <th>予定工数</th>
+                </tr>
+                <tr v-for="todo in todos">
+                    <template v-if="!todo.taskDone">
+                        <td><input type="checkbox" v-model="todo.taskDone"></td>
+                        <td>{{todo.taskTitle}}</td>
+                        <td><span>{{todo.taskHour}}</span>h</td>
+                    </template>
+                </tr>
+            </table>
+            <div class="manHour"><span>{{totalHour}}</span>h</div>
+        </section>
+        <section class="addTask">
+            <h3 class="sectionTitle">タスク追加</h3>
+            <form @submit.prevent="addItem">
+                <table class="taskTable add">
+                    <tr>
+                        <th>タスク名</th>
+                        <th>予定工数</th>
+                    </tr>
+                    <tr>
+                        <td><input type="text" v-model="newTask"></td>
+                        <td><input type="text" v-model="newHour">h</td>
+                    </tr>
+                </table>
+                <input type="submit" value="タスク登録">
+            </form>
+        </section>
+        <section class="completedTask">
+            <h3 class="sectionTitle">8月30日(日)：完了タスク</h3>
+            <table class="taskTable add">
+                <tr>
+                    <th></th>
+                    <th>完了タスク名</th>
+                    <th>予定工数</th>
+                </tr>
+                <tr v-for="todo in todos">
+                    <template v-if="todo.taskDone">
+                        <td><input type="checkbox" v-model="todo.taskDone"></td>
+                        <td>{{todo.taskTitle}}</td>
+                        <td><span>{{todo.taskHour}}</span>h</td>
+                    </template>
+                </tr>
+            </table>
+            <div class="manHour"><span>0.5</span>h</div>
+        </section>
+        <div class="linkSection">
+            <a href="●●●●●">明日以降のタスク登録</a>
+            <a href="●●●●●">過去のタスク一覧</a>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+    <script src="js/main.js"></script>
+
+</body>
+
+</html>
