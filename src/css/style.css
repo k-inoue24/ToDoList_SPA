@@ -1,4 +1,4 @@
-/* body {
+body {
 		font-size: 16px;
 		font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
@@ -48,4 +48,12 @@
 		font-size: 12px;
 		cursor: pointer;
 		color: #08c;
-} */
+}
+
+.fade-enter-active, .fade-leave-active {
+		transition: opacity .5s;
+}
+
+.fade-enter, .fade-leave-to {
+		opacity: 0;
+}
