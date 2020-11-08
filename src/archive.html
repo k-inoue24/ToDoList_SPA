@@ -22,7 +22,7 @@
     </header>
     <h2 class="PageTitle">本日のタスク</h2>
     <section class="remainingTask">
-      <h3 class="sectionTitle">{{todayString}}：残タスク</h3>
+      <h3 class="sectionTitle">{{today}}：残タスク</h3>
       <table class="taskTable remaining">
         <tr>
           <th>完了チェック</th>
@@ -36,6 +36,7 @@
           <td><button v-on:click="deleteItem(todo)">削除</button></td>
         </tr>
       </table>
+      {{consoleChk}}
       <div class="manHour"><span>{{remainingHour}}</span>h</div>
     </section>
     <section class="addTask">
@@ -55,7 +56,7 @@
       </form>
     </section>
     <section class="completedTask">
-      <h3 class="sectionTitle">{{todayString}}：完了タスク</h3>
+      <h3 class="sectionTitle">{{today}}：完了タスク</h3>
       <table class="taskTable add">
         <tr>
           <th></th>
@@ -71,7 +72,7 @@
       <div class="manHour">総工数：<span>{{completedHour}}</span>h</div>
     </section>
     <div class="linkSection">
-      <a href="add.html">明日以降のタスク登録</a>
+      <a href="●●●●●">明日以降のタスク登録</a>
       <a href="●●●●●">過去のタスク一覧</a>
     </div>
   </div>

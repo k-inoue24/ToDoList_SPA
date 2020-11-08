@@ -9,13 +9,11 @@ body {
 }
 
 #app {
-    h1 {
+    .siteTitle {
         font-size: 16px;
+        font-weight: bold;
         border-bottom: 1px solid #ddd;
         padding: 16px 0;
-        >button {
-            float: right;
-        }
     }
     ul {
         padding: 0;

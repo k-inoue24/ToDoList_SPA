@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mr.業務管理くん</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+  <div id="app" class="contentInner">
+    <header>
+      <div class="siteTitle">Mr.業務管理くん</div>
+      <nav>
+        <ul>
+            <li><a href="index.html">本日のタスク</a></li>
+            <li><a href="add.html">タスク新規登録</a></li>
+            <li><a href="archive.html">過去のタスク一覧</a></li>
+        </ul>
+      </nav>
+    </header>
+    <h2 class="PageTitle">タスク新規登録</h2>
+    <section class="remainingTask">
+      <h3 class="sectionTitle">①日付を選択</h3>
+      <select name="" id="">
+        <option value="">{{todayString}}</option>
+      </select>
+      {{dateSelect}}
+      <div class="manHour"><span>{{remainingHour}}</span>h</div>
+    </section>
+    <div class="linkSection">
+      <a href="●●●●●">明日以降のタスク登録</a>
+      <a href="●●●●●">過去のタスク一覧</a>
+    </div>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+  <script src="js/main.js"></script>
+
+</body>
+
+</html>

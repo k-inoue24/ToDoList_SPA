@@ -22,7 +22,7 @@ var vm = new Vue({
     methods: {
         addItem: function() {
             var taskItem = {
-                tasdDay: this.today,
+                tasdDay: this.todayString,
                 taskId: this.lastId,
                 taskTitle: this.newTask,
                 taskHour: this.newHour,
@@ -45,8 +45,11 @@ var vm = new Vue({
     computed: {
         today: function() {
             var today = new Date();
+            return today;
+        },
+        todayString: function() {
             var dayArray = new Array("日","月","火","水","木","金","土");
-            var todayString = today.getFullYear() + '年' + (today.getMonth() + 1) + '月' + today.getDate() + '日' + '（' + dayArray[today.getDay()] + '）'
+            var todayString = this.today.getFullYear() + '年' + (this.today.getMonth() + 1) + '月' + this.today.getDate() + '日' + '（' + dayArray[this.today.getDay()] + '）';
             return todayString;
         },
         remainingTask: function(){
@@ -80,9 +83,16 @@ var vm = new Vue({
           });
           return lastId;
         },
-        consoleChk: function(){
-            console.log(this.todos)
-        },
+        dateSelect: function() {
+          var dateSelect = [];
+          var dateSelectString = [];
+          var dayArray = new Array("日","月","火","水","木","金","土");
+          for(var i = 0; i < 9; i++) {
+            dateSelect[i] = this.today.setDate(this.today.getDate() - i);
+            dateSelectString[i] = dateSelect[i].getFullYear() + '年' + (dateSelect[i].getMonth() + 1) + '月' + dateSelect[i].getDate() + '日' + '（' + dayArray[dateSelect[i].getDay()] + '）';
 
+          }
+          return dateSelect;
+        }
     }
 });
