@@ -1,57 +1,267 @@
+
+/* 基本設定 */
+html {
+	font-size		: 62.5%;
+}
 body {
-    font-size: 16px;
-    font-family: Verdana, Geneva, Tahoma, sans-serif;
+	color		: #333;
+	font-size	: 1.6rem;
+	font-family	: 'Noto Sans', sans-serif;
+	line-height	: 1.5;
+
+}
+main {
+	max-width	: 920px;
+	padding		: 20px 0;
+	margin		: auto;
+}
+section {
+	padding		: 15px 0;
+
+}
+p {
+  text-align: center;
+}
+input {
+	height		: 30px;
+	padding		: 5px;
+	border		: 1px solid #bbb;
+}
+.btn {
+	font-size			: 14px;
+	padding				: 0 4px;
+	border-radius	: 4px;
+	transition		: 0.3s;
+	&.deleteBtn {
+		color				: #333;
+		background	: #fff;
+		border			: 1px solid #bbb;
+		&:hover {
+			color			: #fff;
+			background	: #333;
+		}
+	}
+	&.submitBtn {
+		color					: #fff;
+		background		: #2d3c94;
+		padding				: 2px 8px;
+		margin				: 5px 0 0 5px;
+		border				: 1px solid #2d3c94;
+		&:hover {
+			color			: #003a75;
+			background: #fff;
+		}
+	}
 }
 
-.container {
-    width: 300px;
+
+/* 各タイトル */
+.title {
+	text-align	: center;
+	font-weight	: bold;
+}
+.siteTitle {
+	font-size		: 2.8rem;
+	padding			: 15px 0;
+}
+.pageTitle {
+	display					: flex;
+	align-items			: center;
+	justify-content	: center;
+	font-size				: 2.2rem;
+  margin-bottom		: 20px;
+  &:before {
+		display				: inline-block;
+		content				: '';
+		background		: #333;
+		width					: 12px;
+		height				: 12px;
+		margin-right	: 6px;
+	}
+}
+.sectionTitle {
+	font-size			: 1.9rem;
+  margin-bottom	: 18px;
+}
+.dateTitle {
+  &:before {
+    display: inline-block;
+    content: '';
+    background: url(../img/icon_calendar.png) no-repeat;
+    background-size: cover;
+    width: 17px;
+    height: 17px;
+    margin-right: 4px;
+  }
+}
+.borderTitle {
+	margin-bottom		: 10px;
+  &:after {
+		display				: block;
+		content				: '';
+		background		: #333;
+		width					: 50px;
+		height				: 2px;
+		margin				: 5px auto 0;
+	}
+}
+
+/* ナビゲーション */
+nav {
+	border-top				: 1px solid #ccc;
+	border-bottom			: 1px solid #ccc;
+	ul {
+		max-width				: 600px;
+		display					: flex;
+		justify-content	: center;
+		margin					: auto;
+		li {
+			width					: 33%;
+			min-height		: 30px;
+			text-align		: center;
+			border-left		: 1px solid #ccc;
+			&:last-child {
+				border-right: 1px solid #ccc;
+			}
+			a {
+				display			: inline-block;
+				font-size		: 1.4rem;
+				width				: 100%;
+				height			: 100%;
+				line-height	: 30px;
+			}
+		}
+	}
+}
+
+/* タスク一覧 */
+.taskMessage {
+	display			: block;
+	max-width		: 400px;
+	padding			: 10px 0;
+	margin			: auto;
+	border			: 1px solid #bbb;
+}
+.tableWrap {
+	width		: 480px;
+	margin	: auto;
+	.taskTable {
+		width			: 100%;
+		font-size	: 1.5rem;
+		tr {
+				border-bottom	 : 1px solid #ddd;
+				th,td {
+					padding				: 2px 5px;
+				}
+			th {
+				text-align	: center;
+				&.taskChkHead {
+					width			: 50px;
+				}
+				&.taskHourHead {
+					width			: 80px;
+				}
+				&.taskDeleteHead {
+					width			: 55px;
+				}
+			}
+			td {
+				vertical-align: middle;
+				&.taskChk {
+					text-align	: center;
+				}
+				&.taskHour {
+					text-align	: right;
+				}
+				&.taskDelete {
+					text-align	: center;
+				}
+
+			}
+		}
+		&.addTable {
+			tr {
+				border: none;
+				td {
+					&.taskName {
+						.taskNameInput {
+							width				: 100%;
+						}
+					}
+					&.taskHour {
+						text-align: right;
+						.taskHourInput {
+							width					: 50px;
+							margin-right	: 5px;
+						}
+					}
+				}
+			}
+		}
+	}
+	/* 工数表示 */
+	.hourArea {
+		display				: flex;
+		align-items		: center;
+		margin-top		: 5px;
+		margin-left		: 5px;
+		span {
+			display			: inline-block;
+			color				: #fff;
+			font-size		: 1.3rem;
+			background	: #555;
+			padding			: 2px 4px;
+			margin-right	: 6px;
+		}
+	}
+}
+
+/* セクション間スタイル */
+.sectionDivide {
+	text-align	: center;
+	margin			: 25px 0;
+	span {
+		display				: inline-block;
+		background		: #333;
+		width					: 8px;
+		height				: 8px;
+		margin				: 0 20px;
+		border-radius	: 50%;
+	}
+}
+
+// カレンダー
+.calenderWrap {
+  text-align: center;
+  > div {
+    width: 260px;
     margin: auto;
+  }
 }
 
-#app {
-    .siteTitle {
-        font-size: 16px;
-        font-weight: bold;
-        border-bottom: 1px solid #ddd;
-        padding: 16px 0;
-    }
-    ul {
-        padding: 0;
-    }
-    li {
-        line-height: 1.5;
-        list-style: none;
-        span {
-            &.done {
-                text-decoration: line-through;
-                color: #bbb;
-            }
-        }
-    }
-    input[type="text"] {
-        height: 18px;
-        line-height: 18px;
-        padding: 2px;
-    }
+// CSVダウンロード
+.csvDownload {
+	.csvBtn {
+		display		: block;
+		width			: 150px;
+		text-align: center;
+		color			: #fff;
+		background: #2d3c94;
+		padding		: 0 4px;
+		padding		: 8px;
+		margin		: 20px auto 0;
+		border		: 1px solid #2d3c94;
+		&:hover {
+			color			: #2d3c94;
+			background: #fff;
+		}
+	}
 }
 
-.info {
-    color: #bbb;
-    font-size: 12px;
-    font-weight: normal;
+/* フッター */
+footer {
+  text-align: center;
+  padding: 5px 0;
+  border-top: 4px double #333;
+  border-bottom: 4px double #333;
 }
-
-.command {
-    font-size: 12px;
-    cursor: pointer;
-    color: #08c;
-}
-
-// CSS for Vue
-.fade-enter-active, .fade-leave-active {
-  transition: opacity .5s;
-}
-.fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
-  opacity: 0;
-}
-

@@ -4,79 +4,34 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Mr.業務管理くん</title>
+  <title>Mr. Task Manager</title>
+  <link rel="stylesheet" href="css/destyle.css">
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/style.css">
 </head>
 
 <body>
-  <div id="app" class="contentInner">
-    <header>
-      <h1 class="siteTitle">Mr.業務管理くん</h1>
-      <nav>
-        <ul>
-            <li><a href="index.html">本日のタスク</a></li>
-            <li><a href="add.html">タスク新規登録</a></li>
-            <li><a href="archive.html">過去のタスク一覧</a></li>
-        </ul>
-      </nav>
-    </header>
-    <h2 class="PageTitle">本日のタスク</h2>
-    <section class="remainingTask">
-      <h3 class="sectionTitle">{{today}}：残タスク</h3>
-      <table class="taskTable remaining">
-        <tr>
-          <th>完了チェック</th>
-          <th>タスク名</th>
-          <th>予定工数</th>
-        </tr>
-        <tr v-for="(todo,index) in remainingTask" :key="todo.taskId" data-id="">
-          <td><input type="checkbox" v-model="todo.taskDone"></td>
-          <td>{{todo.taskTitle}}</td>
-          <td><span>{{todo.taskHour}}</span>h</td>
-          <td><button v-on:click="deleteItem(todo)">削除</button></td>
-        </tr>
-      </table>
-      {{consoleChk}}
-      <div class="manHour"><span>{{remainingHour}}</span>h</div>
-    </section>
-    <section class="addTask">
-      <h3 class="sectionTitle">タスク追加</h3>
-      <form @submit.prevent="addItem">
-        <table class="taskTable add">
-          <tr>
-            <th>タスク名</th>
-            <th>予定工数</th>
-          </tr>
-          <tr>
-            <td><input type="text" v-model="newTask"></td>
-            <td><input type="number" v-model="newHour">h</td>
-          </tr>
-        </table>
-        <input type="submit" value="本日のタスク登録">
-      </form>
-    </section>
-    <section class="completedTask">
-      <h3 class="sectionTitle">{{today}}：完了タスク</h3>
-      <table class="taskTable add">
-        <tr>
-          <th></th>
-          <th>完了タスク名</th>
-          <th>工数</th>
-        </tr>
-        <tr v-for="(todo,index) in completedTask" :key="todo.taskId">
-            <td><input type="checkbox" v-model="todo.taskDone"></td>
-            <td>{{todo.taskTitle}}</td>
-            <td><span>{{todo.taskHour}}</span>h</td>
-        </tr>
-      </table>
-      <div class="manHour">総工数：<span>{{completedHour}}</span>h</div>
-    </section>
-    <div class="linkSection">
-      <a href="●●●●●">明日以降のタスク登録</a>
-      <a href="●●●●●">過去のタスク一覧</a>
-    </div>
-  </div>
+  <header>
+    <h1 class="title siteTitle">Mr. Task Manager</h1>
+    <nav>
+      <ul>
+        <li><a href="index.html">本日のタスク</a></li>
+        <li><a href="add.html">タスク一覧・新規登録</a></li>
+        <li><a href="archive.html">データダウンロード</a></li>
+      </ul>
+    </nav>
+  </header>
+  <main id="app" class="csvDownload">
+    <h2 class="title pageTitle">データダウンロード</h2>
+    <p>登録タスクの一覧をCSV形式でダウンロードします。</p>
+    <button class="btn csvBtn" v-on:click="downloadCSV">CSVダウンロード</button>
+  </main>
+  <footer>
+    <a href="https://twitter.com/KeitaBangkok">&copy;いのっち</a>
+  </footer>
   <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+  <script src='https://unpkg.com/v-calendar'></script>
   <script src="js/main.js"></script>
 
 </body>

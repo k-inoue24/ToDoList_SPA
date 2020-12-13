@@ -4,37 +4,108 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Mr.業務管理くん</title>
+  <title>Mr. Task Manager</title>
+  <link rel="stylesheet" href="css/destyle.css">
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/style.css">
 </head>
 
 <body>
-  <div id="app" class="contentInner">
-    <header>
-      <div class="siteTitle">Mr.業務管理くん</div>
-      <nav>
-        <ul>
-            <li><a href="index.html">本日のタスク</a></li>
-            <li><a href="add.html">タスク新規登録</a></li>
-            <li><a href="archive.html">過去のタスク一覧</a></li>
-        </ul>
-      </nav>
-    </header>
-    <h2 class="PageTitle">タスク新規登録</h2>
+  <header>
+    <div class="title siteTitle">Mr. Task Manager</div>
+    <nav>
+      <ul>
+        <li><a href="index.html">本日のタスク</a></li>
+        <li><a href="add.html">タスク一覧・新規登録</a></li>
+        <li><a href="archive.html">データダウンロード</a></li>
+      </ul>
+    </nav>
+  </header>
+  <main id="app">
+    <h2 class="title pageTitle">タスク一覧・新規登録</h2>
     <section class="remainingTask">
-      <h3 class="sectionTitle">①日付を選択</h3>
-      <select name="" id="">
-        <option value="">{{todayString}}</option>
-      </select>
-      {{dateSelect}}
-      <div class="manHour"><span>{{remainingHour}}</span>h</div>
+      <h3 class="title sectionTitle dateTitle">日付を選択</h3>
+      <div class="calenderWrap">
+        <v-date-picker :mode="'single'"
+                        :formats="formats"
+                        v-model="selectedDate"
+                        :model-config="modelConfig"
+                        ></v-date-picker>
+      </div>
     </section>
-    <div class="linkSection">
-      <a href="●●●●●">明日以降のタスク登録</a>
-      <a href="●●●●●">過去のタスク一覧</a>
+    <div class="sectionDivide" v-if="selectedDate!=null">
+      <span></span>
+      <span></span>
+      <span></span>
     </div>
-  </div>
+    <section class="addTask" v-if="selectedDate!=null">
+      <h3 class="title sectionTitle"><span ref="selectedDate">{{selectedDate}}</span>のタスク登録</h3>
+      <form @submit.prevent="addFutureItem">
+        <div class="tableWrap">
+          <table class="taskTable addTable">
+            <tr>
+              <th class="taskNameHead">タスク名</th>
+              <th class="taskHourHead">予定工数</th>
+            </tr>
+            <tr>
+              <td class="taskName"><input class="taskNameInput" type="text" v-model="newTask"></td>
+              <td class="taskHour"><input class="taskHourInput" type="number" v-model="newHour">h</td>
+            </tr>
+          </table>
+          <button class="btn submitBtn" type="submit">タスク登録</button>
+        </div>
+      </form>
+    </section>
+    <div class="sectionDivide" v-if="selectedDate!=null">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+    <section class="futureTask" v-if="selectedDate!=null">
+      <h3 class="title sectionTitle"><span>{{selectedDate}}</span>のタスク一覧</h3>
+      <p  class="taskMessage" v-if="futureTaskHour==0 && futureDoneTaskHour==0">タスクが登録されていません</p>
+      <h4 class="title borderTitle" v-if="futureTaskHour!=0 || futureDoneTaskHour!=0">未完了タスク</h4>
+      <p  class="taskMessage" v-if="futureTaskHour==0 && futureDoneTaskHour!=0">未完了のタスクはありません</p>
+      <div class="tableWrap" v-if="futureTaskHour!=0">
+        <table class="taskTable futureTable">
+          <tr>
+            <th class="taskChkHead">完了</th>
+            <th class="taskNameHead">タスク名</th>
+            <th class="taskHourHead">工数</th>
+          </tr>
+          <tr v-for="(todo,index) in futureTask" :key="todo.taskId">
+              <td><input type="checkbox" v-model="todo.taskDone" v-on:change='checkConfirm("complete",todo.taskTitle)'></td>
+              <td>{{todo.taskTitle}}</td>
+              <td><span>{{todo.taskHour}}</span>h</td>
+          </tr>
+        </table>
+        <div class="hourArea"><span>総工数</span>{{futureTaskHour}}h</div>
+      </div>
+      <h4 class="title borderTitle" v-if="futureTaskHour!=0 || futureDoneTaskHour!=0">完了タスク</h4>
+      <p  class="taskMessage" v-if="futureTaskHour!=0 && futureDoneTaskHour==0">完了したタスクはありません</p>
+      <div class="tableWrap" v-if="futureDoneTaskHour!=0">
+        <table class="taskTable futureTable">
+          <tr>
+            <th class="taskChkHead">完了</th>
+            <th class="taskNameHead">タスク名</th>
+            <th class="taskHourHead">工数</th>
+          </tr>
+          <tr v-for="(todo,index) in futureDoneTask" :key="todo.taskId">
+              <td><input type="checkbox" v-model="todo.taskDone" v-on:change='checkConfirm("complete",todo.taskTitle)'></td>
+              <td>{{todo.taskTitle}}</td>
+              <td><span>{{todo.taskHour}}</span>h</td>
+          </tr>
+        </table>
+        <div class="hourArea"><span>総工数</span>{{futureDoneTaskHour}}h</div>
+      </div>
+    </section>
+  </main>
+  <footer>
+    <a href="https://twitter.com/KeitaBangkok">&copy;いのっち</a>
+  </footer>
   <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+  <script src='https://unpkg.com/v-calendar'></script>
   <script src="js/main.js"></script>
 
 </body>

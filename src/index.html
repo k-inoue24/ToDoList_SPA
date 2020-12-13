@@ -4,77 +4,98 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Mr.業務管理くん</title>
+  <title>Mr. Task Manager</title>
+  <link rel="stylesheet" href="css/destyle.css">
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/style.css">
 </head>
 
 <body>
-  <div id="app" class="contentInner">
-    <header>
-      <h1 class="siteTitle">Mr.業務管理くん</h1>
-      <nav>
-        <ul>
-            <li><a href="index.html">本日のタスク</a></li>
-            <li><a href="add.html">タスク新規登録</a></li>
-            <li><a href="archive.html">過去のタスク一覧</a></li>
-        </ul>
-      </nav>
-    </header>
-    <h2 class="PageTitle">本日のタスク</h2>
+  <header>
+    <h1 class="title siteTitle">Mr. Task Manager</h1>
+    <nav>
+      <ul>
+          <li><a href="index.html">本日のタスク</a></li>
+          <li><a href="add.html">タスク一覧・新規登録</a></li>
+          <li><a href="archive.html">データダウンロード</a></li>
+      </ul>
+    </nav>
+  </header>
+  <main id="app">
+    <h2 class="title pageTitle">本日のタスク</h2>
     <section class="remainingTask">
-      <h3 class="sectionTitle">{{todayString}}：残タスク</h3>
-      <table class="taskTable remaining">
-        <tr>
-          <th>完了チェック</th>
-          <th>タスク名</th>
-          <th>予定工数</th>
-        </tr>
-        <tr v-for="(todo,index) in remainingTask" :key="todo.taskId" data-id="">
-          <td><input type="checkbox" v-model="todo.taskDone"></td>
-          <td>{{todo.taskTitle}}</td>
-          <td><span>{{todo.taskHour}}</span>h</td>
-          <td><button v-on:click="deleteItem(todo)">削除</button></td>
-        </tr>
-      </table>
-      <div class="manHour"><span>{{remainingHour}}</span>h</div>
-    </section>
-    <section class="addTask">
-      <h3 class="sectionTitle">タスク追加</h3>
-      <form @submit.prevent="addItem">
-        <table class="taskTable add">
+      <h3 class="title sectionTitle">{{todayString}}の残タスク</h3>
+      <p class="taskMessage" v-if="remainingHour==0">本日の残タスクはありません</p>
+      <div class="tableWrap" v-if="remainingHour!=0">
+        <table class="taskTable remainingTable">
           <tr>
-            <th>タスク名</th>
-            <th>予定工数</th>
+            <th class="taskChkHead">完了</th>
+            <th class="taskNameHead">タスク名</th>
+            <th class="taskHourHead">予定工数</th>
+            <th class="taskDeleteHead"></th>
           </tr>
-          <tr>
-            <td><input type="text" v-model="newTask"></td>
-            <td><input type="number" v-model="newHour">h</td>
+          <tr v-for="(todo,index) in remainingTask" :key="todo.taskId" data-id="">
+            <td class="taskChk"><input type="checkbox" v-model="todo.taskDone" v-on:change='checkConfirm("remaining",todo.taskTitle)'></td>
+            <td class="taskName">{{todo.taskTitle}}</td>
+            <td class="taskHour"><span>{{todo.taskHour}}</span>h</td>
+            <td class="taskDelete"><button class="btn deleteBtn" v-on:click="deleteItem(todo)">削除</button></td>
           </tr>
         </table>
-        <input type="submit" value="本日のタスク登録">
+        <div class="hourArea"><span>残工数</span>{{remainingHour}}h</div>
+      </div>
+    </section>
+    <div class="sectionDivide">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+    <section class="addTask">
+      <h3 class="title sectionTitle">{{todayString}}のタスク追加</h3>
+      <form @submit.prevent="addItem">
+        <div class="tableWrap">
+          <table class="taskTable addTable">
+            <tr>
+              <th class="taskNameHead">タスク名</th>
+              <th class="taskHourHead">予定工数</th>
+            </tr>
+            <tr>
+              <td class="taskName"><input class="taskNameInput" type="text" v-model="newTask"></td>
+              <td class="taskHour"><input class="taskHourInput" type="number" v-model="newHour">h</td>
+            </tr>
+          </table>
+          <button class="btn submitBtn" type="submit">タスク登録</button>
+        </div>
       </form>
     </section>
-    <section class="completedTask">
-      <h3 class="sectionTitle">{{todayString}}：完了タスク</h3>
-      <table class="taskTable add">
-        <tr>
-          <th></th>
-          <th>完了タスク名</th>
-          <th>工数</th>
-        </tr>
-        <tr v-for="(todo,index) in completedTask" :key="todo.taskId">
-            <td><input type="checkbox" v-model="todo.taskDone"></td>
-            <td>{{todo.taskTitle}}</td>
-            <td><span>{{todo.taskHour}}</span>h</td>
-        </tr>
-      </table>
-      <div class="manHour">総工数：<span>{{completedHour}}</span>h</div>
-    </section>
-    <div class="linkSection">
-      <a href="add.html">明日以降のタスク登録</a>
-      <a href="●●●●●">過去のタスク一覧</a>
+    <div class="sectionDivide">
+      <span></span>
+      <span></span>
+      <span></span>
     </div>
-  </div>
+    <section class="completedTask">
+      <h3 class="title sectionTitle">{{todayString}}の完了タスク</h3>
+      <p class="taskMessage" v-if="completedHour==0">本日の完了タスクはありません</p>
+      <div class="tableWrap" v-if="completedHour!=0">
+        <table class="taskTable doneTable">
+          <tr>
+            <th class="taskChkHead">完了</th>
+            <th class="taskNameHead">完了タスク名</th>
+            <th class="taskHourHead">工数</th>
+          </tr>
+          <tr v-for="(todo,index) in completedTask" :key="todo.taskId">
+              <td class="taskChk"><input type="checkbox" v-model="todo.taskDone" v-on:change='checkConfirm("complete",todo.taskTitle)'></td>
+              <td class="taskName">{{todo.taskTitle}}</td>
+              <td class="taskHour"><span>{{todo.taskHour}}</span>h</td>
+          </tr>
+        </table>
+        <div class="hourArea"><span>総工数</span>{{completedHour}}h</div>
+      </div>
+    </section>
+  </main>
+  <footer>
+    <a href="https://twitter.com/KeitaBangkok">&copy;いのっち</a>
+  </footer>
   <script src="https://cdn.jsdelivr.net/npm/vue"></script>
   <script src="js/main.js"></script>
 
