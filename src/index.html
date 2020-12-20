@@ -13,7 +13,7 @@
 
 <body>
   <header>
-    <h1 class="title siteTitle">Mr. Task Manager</h1>
+    <div class="title siteTitle">Mr. Task Manager</div>
     <nav>
       <ul>
           <li><a href="index.html">本日のタスク</a></li>
@@ -22,10 +22,10 @@
       </ul>
     </nav>
   </header>
-  <main id="app">
-    <h2 class="title pageTitle">本日のタスク</h2>
+  <main id="app" v-cloak>
+    <h1 class="title pageTitle">本日のタスク</h1>
     <section class="remainingTask">
-      <h3 class="title sectionTitle">{{todayString}}の残タスク</h3>
+      <h2 class="title sectionTitle">{{todayString}}の残タスク</h2>
       <p class="taskMessage" v-if="remainingHour==0">本日の残タスクはありません</p>
       <div class="tableWrap" v-if="remainingHour!=0">
         <table class="taskTable remainingTable">
@@ -51,7 +51,7 @@
       <span></span>
     </div>
     <section class="addTask">
-      <h3 class="title sectionTitle">{{todayString}}のタスク追加</h3>
+      <h2 class="title sectionTitle">{{todayString}}のタスク追加</h2>
       <form @submit.prevent="addItem">
         <div class="tableWrap">
           <table class="taskTable addTable">
@@ -61,7 +61,7 @@
             </tr>
             <tr>
               <td class="taskName"><input class="taskNameInput" type="text" v-model="newTask"></td>
-              <td class="taskHour"><input class="taskHourInput" type="number" v-model="newHour">h</td>
+              <td class="taskHour"><input class="taskHourInput" type="number" min=0 v-model="newHour">h</td>
             </tr>
           </table>
           <button class="btn submitBtn" type="submit">タスク登録</button>
@@ -74,7 +74,7 @@
       <span></span>
     </div>
     <section class="completedTask">
-      <h3 class="title sectionTitle">{{todayString}}の完了タスク</h3>
+      <h2 class="title sectionTitle">{{todayString}}の完了タスク</h2>
       <p class="taskMessage" v-if="completedHour==0">本日の完了タスクはありません</p>
       <div class="tableWrap" v-if="completedHour!=0">
         <table class="taskTable doneTable">

@@ -7,11 +7,6 @@ var vm = new Vue({
         newHour: '',
         id: 1,
         todos: [],
-        items: [
-          { name: 'りんご', price: '100' },
-          { name: 'みかん', price: '50' },
-          { name: 'マンゴー', price: '3000' }
-        ],
         mode: 'single',
         formats: {
           input: ['YYYY-MM-DD'],
@@ -48,7 +43,7 @@ var vm = new Vue({
                 this.newTask = '';
                 this.newHour = '';
             } else {
-              alert('タスク名と予定工数を両方入力してください')
+              alert('タスク名と予定工数をそれぞれ入力してください')
             }
         },
         deleteItem: function(item) {
@@ -71,7 +66,7 @@ var vm = new Vue({
             this.newTask = '';
             this.newHour = '';
         } else {
-          alert('タスク名と予定工数を両方入力してください')
+          alert('タスク名と予定工数をそれぞれ入力してください')
         }
       },
       checkConfirm: function(status,taskTitle){
